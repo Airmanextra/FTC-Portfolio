@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS ROBOTICS // PORTFOLIO_V.1.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        @media print {
+            body { background: #000; }
+            .page { page-break-after: always; break-after: page; }
+            .no-print { display: none !important; }
+        }
+
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-red: #ff003c;
+            --neon-amber: #ffae00;
+            --dark-gray: #0a0a0a;
+            --mid-gray: #141414;
+        }
+
+        body {
+            background: #000 !important; /* Set background to pure black */
+            color: #e0e0e0;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-tech { font-family: 'Share Tech Mono', monospace; }
+
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--neon-red);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--neon-cyan);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(12px, 9999px, 52px, 0); }
+            20% { clip: rect(58px, 9999px, 12px, 0); }
+            40% { clip: rect(12px, 9999px, 64px, 0); }
+            60% { clip: rect(86px, 9999px, 32px, 0); }
+            80% { clip: rect(28px, 9999px, 92px, 0); }
+            100% { clip: rect(64px, 9999px, 16px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            20% { clip: rect(12px, 9999px, 45px, 0); }
+            40% { clip: rect(78px, 9999px, 12px, 0); }
+            60% { clip: rect(34px, 9999px, 67px, 0); }
+            80% { clip: rect(91px, 9999px, 23px, 0); }
+            100% { clip: rect(12px, 9999px, 54px, 0); }
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 240, 255, 0.02) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .border-cyan { border-color: var(--neon-cyan); }
+        .border-red { border-color: var(--neon-red); }
+        .border-amber { border-color: var(--neon-amber); }
+        
+        .text-cyan { color: var(--neon-cyan); }
+        .text-red { color: var(--neon-red); }
+        .text-amber { color: var(--neon-amber); }
+        
+        .bg-cyan-glow { background: rgba(0, 240, 255, 0.1); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+        .bg-red-glow { background: rgba(255, 0, 60, 0.1); box-shadow: 0 0 20px rgba(255, 0, 60, 0.2); }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: #000 !important; /* Ensure all pages have a black background */
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.1);
+        }
+
+        /* Correcting the background logo centering for all pages */
+        .page::after {
+            content: url('FTCNexusLogoNoTriangles.png');
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.05; /* Lower opacity for background */
+            width: 80%; /* Adjust size for background */
+            height: auto;
+            z-index: -1; /* Ensure it stays in the background */
+        }
+
+        .corner-accent {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .corner-tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+        .corner-tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
+        .corner-bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
+        .corner-br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+
+        .data-block {
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .data-block::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid var(--neon-cyan);
+            border-left: 2px solid var(--neon-cyan);
+        }
+
+        .data-block::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            right: -1px;
+            width: 10px;
+            height: 10px;
+            border-bottom: 2px solid var(--neon-cyan);
+            border-right: 2px solid var (--neon-cyan);
+        }
+
+        .placeholder {
+            background: repeating-linear-gradient(
+                45deg,
+                #1a1a1a,
+                #1a1a1a 10px,
+                #222 10px,
+                #222 20px
+            );
+            border: 1px dashed var(--neon-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-red);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .placeholder::before {
+            content: '[DATA_MISSING]';
+            opacity: 0.5;
+        }
+
+        .hex-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0.05' fill='%2300f0ff'/%3E%3C/svg%3E");
+        }
+
+        .barcode {
+            font-family: 'Libre Barcode 39', cursive;
+            font-size: 3rem;
+            color: var(--neon-cyan);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .warning-stripe {
+            background: repeating-linear-gradient(
+                45deg,
+                var(--neon-amber),
+                var(--neon-amber) 10px,
+                #000 10px,
+                #000 20px
+            );
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .mono-space { letter-spacing: 0.1em; }
+        
+        .section-header {
+            border-left: 4px solid var(--neon-cyan);
+            padding-left: 1rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .spec-line {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted rgba(0, 240, 255, 0.3);
+            padding: 0.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .spec-label { color: #666; }
+        .spec-value { color: var(--neon-cyan); text-align: right; }
+
+        input[type="text"], textarea {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.5rem;
+            width: 100%;
+            outline: none;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .editable:hover {
+            background: rgba(0, 240, 255, 0.05);
+            cursor: text;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--neon-red);
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10000;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.5);
+            transition: all 0.3s;
+        }
+
+        .print-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255, 0, 60, 0.8);
+        }
+
+        .redacted {
+            background: #000;
+            color: #000;
+            border: 1px solid var (--neon-red);
+            padding: 0 0.5rem;
+            cursor: not-allowed;
+        }
+
+        .redacted:hover {
+            background: var(--neon-red);
+            color: #000;
+        }
+
+        #page5 {
+            width: 210mm; /* Set to portrait dimensions */
+            min-height: 297mm;
+            margin: 0 auto;
+        }
+
+        .page {
+            position: relative;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="scanline"></div>
+    
+    <button onclick="window.print()" class="print-btn no-print">
+        INITIATE_PRINT_SEQUENCE
+    </button>
+
+    <!-- Adding the logo to the header -->
+    <header class="flex items-center justify-between p-4 bg-black bg-opacity-50">
+        <img src="FTCNexusLogoNoTriangles.png" alt="Nexus Logo" class="w-12 h-12">
+        <h1 class="text-2xl font-bold text-white">Nexus Robotics</h1>
+    </header>˘
+
+    <!-- PAGE 1: COVER / TEAM ID -->
+    <div class="page grid-bg hex-pattern relative" id="page1">
+˘        <div class="absolute inset-0 flex justify-center items-end pb-16">
+            <img src="FTCNexusLogoNoTriangles.png" alt="Nexus Logo" class="w-96 h-96 opacity-100">
+        </div>
+        <div class="corner-accent corner-tl"></div>
+        <div class="corner-accent corner-tr"></div>
+        <div class="corner-accent corner-bl"></div>
+        <div class="corner-accent corner-br"></div>
+
+        <div class="h-full flex flex-col justify-center items-center px-16 relative z-10">
+            <div class="w-full max-w-2xl">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="h-px bg-cyan flex-1 opacity-30"></div>
+                    <span class="font-mono text-cyan text-sm mx-4 tracking-widest">TEAM IDENTIFICATION</span>
+                    <div class="h-px bg-cyan flex-1 opacity-30"></div>
+                </div>
+
+                <h1 class="text-8xl font-bold mb-2 tracking-tighter" style="color: #fff;">
+                    <span class="glitch-text" data-text="NEXUS">NEXUS</span>
+                </h1>
+                <h2 class="text-6xl font-bold mb-8 text-cyan tracking-widest font-tech">
+                    ROBOTICS
+                </h2>
+
+                <div class="flex items-center gap-4 mb-12">
+                    <div class="h-12 w-1 bg-red"></div>
+                    <div>
+                        <p class="font-mono text-2xl text-white tracking-widest">TEAM #<span class="text-red text-4xl font-bold">19282</span></p>
+                        <p class="font-mono text-sm text-gray-500">UNITED KINGDOM // LONDON</p>
+                    </div>
+                </div>
+
+                <div class="data-block p-6 mb-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="font-mono text-xs text-cyan">MISSION STATEMENT</span>
+                        <span class="status-indicator"></span>
+                    </div>
+                    <p class="text-lg leading-relaxed text-gray-300 font-mono">
+                        TO BECOME A HUB FOR COMPETITION, LEARNING, AND COMMUNITY
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="border border-cyan p-4 bg-black bg-opacity-50">
+                        <div class="text-3xl font-bold text-cyan font-mono">2025</div>
+                        <div class="text-xs text-gray-500 mt-1">ESTABLISHED</div>
+                    </div>
+                    <div class="border border-cyan p-4 bg-black bg-opacity-50">
+                        <div class="text-3xl font-bold text-cyan font-mono">4</div>
+                        <div class="text-xs text-gray-500 mt-1">OPERATORS</div>
+                    </div>
+                    <div class="border border-cyan p-4 bg-black bg-opacity-50">
+                        <div class="text-3xl font-bold text-cyan font-mono">1</div>
+                        <div class="text-xs text-gray-500 mt-1">SEASONS_ACTIVE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
+            <div class="font-mono text-xs text-gray-600">
+                DOC_ID: NEX-2025-001<br>
+                ENCRYPTION: NONE
+            </div>
+            <div class="placeholder w-32 h-32 rounded">
+                <!-- TEAM LOGO PLACEHOLDER -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: TEAM STRUCTURE -->
+    <div class="page grid-bg relative" id="page2">
+        <div class="corner-accent corner-tl border-red"></div>
+        <div class="corner-accent corner-tr border-red"></div>
+        
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-2 h-12 bg-red"></div>
+                <div>
+                    <h2 class="text-4xl font-bold text-white tracking-widest">UNIT COMPOSITION</h2>
+                    <p class="font-mono text-red text-sm">PERSONNEL_MANIFEST // 4 OPERATORS</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-8 flex-1">
+                <!-- LEADERSHIP -->
+                <div class="space-y-4">
+                    <h3 class="font-mono text-cyan text-lg border-b border-cyan pb-2">COMMAND STRUCTURE</h3>
+                    
+                    <div class="data-block p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-white font-bold">HENRY</span>
+                            <span class="font-mono text-xs text-red">CAPTAIN</span>
+                        </div>
+                        <p class="text-sm text-gray-400 font-mono">OVERSIGHT + BUILD LEAD</p>
+                        <div class="mt-2 flex gap-2">
+                            <span class="text-xs border border-cyan px-2 py-1 text-cyan font-mono">FABRICATION</span>
+                            <span class="text-xs border border-cyan px-2 py-1 text-cyan font-mono">LATHE</span>
+                            <span class="text-xs border border-cyan px-2 py-1 text-cyan font-mono">CNC</span>
+                        </div>
+                    </div>
+
+                    <div class="data-block p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-white font-bold">RISH</span>
+                            <span class="font-mono text-xs text-amber">SOFTWARE_LEAD</span>
+                        </div>
+                        <p class="text-sm text-gray-400 font-mono">PATHING + VISION + CONTROL SYSTEMS</p>
+                        <div class="mt-2 flex gap-2">
+                            <span class="text-xs border border-amber px-2 py-1 text-amber font-mono">PEDRO_PATHING</span>
+                            <span class="text-xs border border-amber px-2 py-1 text-amber font-mono">LIMELIGHT</span>
+                        </div>
+                    </div>
+
+                    <div class="data-block p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-white font-bold">ADAM</span>
+                            <span class="font-mono text-xs text-cyan">DESIGN_LEAD</span>
+                        </div>
+                        <p class="text-sm text-gray-400 font-mono">CAD + MECHANICAL ARCHITECTURE</p>
+                    </div>
+
+                    <div class="data-block p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-white font-bold">EVERYONE</span>
+                            <span class="font-mono text-xs text-purple-400">OUTREACH_TEAM</span>
+                        </div>
+                        <p class="text-sm text-gray-400 font-mono">COMMUNITY_ENGAGEMENT + MENTORSHIP</p>
+                    </div>
+                </div>
+
+                <!-- DIVISIONS -->
+                <div class="space-y-4">
+                    <h3 class="font-mono text-cyan text-lg border-b border-cyan pb-2">OPERATIONAL DIVISIONS</h3>
+                    
+                    <div class="border-l-2 border-red pl-4 py-2">
+                        <h4 class="text-white font-bold mb-1">MECHANICAL</h4>
+                        <p class="text-sm text-gray-500 font-mono">DRIVETRAIN, TURRET, INTAKE, SHOOTER FABRICATION</p>
+                        <div class="mt-2 text-xs font-mono text-red">
+                            HEADS: HENRY, ADAM, RISH // MEMBERS: HENRY, ADAM, RISH
+                        </div>
+                    </div>
+
+                    <div class="border-l-2 border-cyan pl-4 py-2">
+                        <h4 class="text-white font-bold mb-1">SOFTWARE</h4>
+                        <p class="text-sm text-gray-500 font-mono">AUTONOMOUS PATHING, VISION PROCESSING, TELEOP CONTROL</p>
+                        <div class="mt-2 text-xs font-mono text-cyan">
+                            HEADS: RISH, HENRY // MEMBERS: RISH, HENRY
+                        </div>
+                    </div>
+
+                    <div class="border-l-2 border-amber pl-4 py-2">
+                        <h4 class="text-white font-bold mb-1">DESIGN</h4>
+                        <p class="text-sm text-gray-500 font-mono">CAD MODELING, ITERATION, SPATIAL OPTIMIZATION</p>
+                        <div class="mt-2 text-xs font-mono text-amber">
+                            HEADS: HENRY, ADAM // MEMBERS: HENRY, ADAM
+                        </div>
+                    </div>
+
+                    <div class="border-l-2 border-purple-500 pl-4 py-2">
+                        <h4 class="text-white font-bold mb-1">OUTREACH</h4>
+                        <p class="text-sm text-gray-500 font-mono">MENTORSHIP, EVENTS, DIGITAL PRESENCE, INTERNATIONAL_LIAISON</p>
+                        <div class="mt-2 text-xs font-mono text-purple-400">
+                            HEADS: EVERYONE // MEMBERS: EVERYONE
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 p-4 bg-red-glow border border-red">
+                <p class="font-mono text-sm text-red text-center tracking-widest">
+                    NOTE: THIS TEAM IS ENTIRELY STUDENT-LED, WITH ALL TECHNICAL DECISIONS MADE BY STUDENTS.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: BUDGET & SPONSORS -->
+    <div class="page grid-bg relative" id="page3">
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                    <img src="FTCNexusLogoNoTriangles.png" alt="Nexus Logo" class="w-16 h-16">
+                    <div>
+                        <h2 class="text-4xl font-bold text-white tracking-widest">TEAM 247</h2>
+                        <p class="font-mono text-red text-sm">UNITED KINGDOM // NEXUS</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-gray-500 font-mono">UNIT DESIGNATION</div>
+                    <div class="text-2xl font-bold text-red font-mono tracking-widest">[ROBOT_NAME]</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6 mb-8">
+                <div class="col-span-2">
+                    <h3 class="font-mono text-cyan mb-4 text-sm tracking-widest">EXPENDITURE BREAKDOWN</h3>
+                    <div class="space-y-4">
+                        <div class="border border-cyan p-4 bg-cyan-glow">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-cyan font-bold font-mono">HARDWARE</span>
+                                <span class="text-2xl font-bold text-cyan font-mono">75%</span>
+                            </div>
+                            <div class="w-full bg-gray-900 h-2">
+                                <div class="bg-cyan h-full" style="width: 75%"></div>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2 font-mono">MOTORS, ELECTRONICS, MATERIALS, COMPONENTS</p>
+                        </div>
+
+                        <div class="border border-red p-4 bg-red-glow">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-red font-bold font-mono">EVENTS</span>
+                                <span class="text-2xl font-bold text-red font-mono">12.5%</span>
+                            </div>
+                            <div class="w-full bg-gray-900 h-2">
+                                <div class="bg-red h-full" style="width: 12.5%"></div>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2 font-mono">TRAVEL, REGISTRATION, COMPETITION_FEES</p>
+                        </div>
+
+                        <div class="border border-amber p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-amber font-bold font-mono">TOOLS</span>
+                                <span class="text-2xl font-bold text-amber font-mono">12.5%</span>
+                            </div>
+                            <div class="w-full bg-gray-900 h-2">
+                                <div class="bg-amber h-full" style="width: 12.5%"></div>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2 font-mono">FABRICATION_EQUIPMENT, CONSUMABLES</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="font-mono text-cyan mb-4 text-sm tracking-widest">FUNDING SOURCES</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">PARENTS</span>
+                            <span class="text-cyan font-mono text-xs">£3,500</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">ASL ROBOTICS</span>
+                            <span class="text-cyan font-mono text-xs">£1,000</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">MARTIN</span>
+                            <span class="text-cyan font-mono text-xs">£1,000</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">THE WHATSUPP CO</span>
+                            <span class="text-cyan font-mono text-xs">£500</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">DIFFERENTIAL RESEARCH</span>
+                            <span class="text-cyan font-mono text-xs">£2,000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-3 border border-dashed border-gray-600">
+                        <p class="text-xs text-gray-500 font-mono text-center">IN-KIND: CHOP SHOP (FREE ALUMINIUM MFG)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1">
+                <h3 class="font-mono text-cyan mb-4 text-sm tracking-widest">CORPORATE PARTNERS</h3>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="border border-cyan p-4 text-center bg-black bg-opacity-50">
+                        <div class="text-cyan font-bold font-mono mb-1">ASL ROBOTICS</div>
+                        <div class="text-xs text-gray-500">£1,000 + FACILITIES</div>
+                    </div>
+                    <div class="border border-cyan p-4 text-center bg-black bg-opacity-50">
+                        <div class="text-cyan font-bold font-mono mb-1">DIFFERENTIAL RESEARCH</div>
+                        <div class="text-xs text-gray-500">£2,000</div>
+                    </div>
+                    <div class="border border-cyan p-4 text-center bg-black bg-opacity-50">
+                        <div class="text-cyan font-bold font-mono mb-1">CHOP SHOP</div>
+                        <div class="text-xs text-gray-500">FREE ALUMINIUM MFG</div>
+                    </div>
+                    <div class="border border-cyan p-4 text-center bg-black bg-opacity-50">
+                        <div class="text-cyan font-bold font-mono mb-1">THE WHATSUPP CO</div>
+                        <div class="text-xs text-gray-500">£500</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center font-mono text-xs text-gray-600">
+                <span>ACQUISITION_STRATEGY: DIRECT_OUTREACH + PERSONAL_NETWORKS</span>
+                <span class="text-amber">STATUS: FUNDED</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4: MENTORS & INDUSTRY -->
+    <div class="page grid-bg relative" id="page4">
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-2 h-12 bg-cyan"></div>
+                <div>
+                    <h2 class="text-4xl font-bold text-white tracking-widest">EXTERNAL SUPPORT</h2>
+                    <p class="font-mono text-cyan text-sm">MENTOR_MANIFEST // INDUSTRY_CONNECTIONS</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="font-mono text-red text-lg mb-4 border-b border-red pb-2">TECHNICAL MENTORS</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <img src="MrAliPhoto.png" alt="Muktar Ali" class="w-20 h-20 flex-shrink-0 rounded-full object-cover">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-white font-bold">MUKTAR ALI</h4>
+                                    <span class="text-xs font-mono text-cyan border border-cyan px-2">ASL ROBOTICS</span>
+                                </div>
+                                <p class="text-sm text-gray-400 font-mono mt-1">HEAD OF ASL ROBOTICS</p>
+                                <p class="text-xs text-gray-600 mt-2">FACILITY_ACCESS + PROGRAM_DIRECTION</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <img src="SebPhoto.png" alt="Sebastian Seminara" class="w-20 h-20 flex-shrink-0 rounded-full object-cover">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-white font-bold">SEBASTIAN SEMINARA</h4>
+                                    <span class="text-xs font-mono text-cyan border border-cyan px-2">INDUSTRY</span>
+                                </div>
+                                <p class="text-sm text-gray-400 font-mono mt-1">LASER_CUTTING + FTC_KNOWLEDGE</p>
+                                <p class="text-xs text-gray-600 mt-2">MACHINING_TRAINING + GENERAL_MENTORSHIP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-mono text-amber text-lg mb-4 border-b border-amber pb-2">KNOWLEDGE_TRANSFER_LOG</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="data-block p-3">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="status-indicator bg-amber"></span>
+                                <span class="font-bold text-white">Lathe Operation</span>
+                            </div>
+                            <p class="text-xs text-gray-400 font-mono">Student: Henry</p>
+                            <p class="text-xs text-gray-400 font-mono">Source: Sebastian Seminara</p>
+                            <p class="text-xs text-cyan font-mono mt-1">Date: 24 January 2026</p>
+                        </div>
+
+                        <div class="data-block p-3">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="status-indicator bg-amber"></span>
+                                <span class="font-bold text-white">CNC Operation</span>
+                            </div>
+                            <p class="text-xs text-gray-400 font-mono">Student: Henry</p>
+                            <p class="text-xs text-gray-400 font-mono">Source: Sebastian Seminara</p>
+                            <p class="text-xs text-cyan font-mono mt-1">Date: 31 January 2026</p>
+                        </div>
+
+                        <div class="data-block p-3">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="status-indicator bg-amber"></span>
+                                <span class="font-bold text-white">LASER_CUTTING</span>
+                            </div>
+                            <p class="text-xs text-gray-400 font-mono">STUDENT: ALL_TEAM</p>
+                            <p class="text-xs text-gray-400 font-mono">SOURCE: SEBASTIAN_SEMINARA</p>
+                            <p class="text-xs text-cyan font-mono mt-1">STATUS: ONGOING</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 border-t border-gray-800 pt-6">
+                <h3 class="font-mono text-cyan text-sm mb-4 tracking-widest">INTERNATIONAL_LIAISON</h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="border border-cyan p-4 bg-cyan-glow">
+                        <div class="text-lg font-bold text-white mb-1">TEAM 9034</div>
+                        <div class="text-sm text-cyan font-mono mb-2">MUSTANGS</div>
+                        <div class="text-xs text-gray-400">USA</div>
+                        <div class="text-xs text-gray-500 mt-2">KNOWLEDGE_TRANSFER: CODE, STRATEGY, DESIGN, OPERATIONS</div>
+                    </div>
+                    <div class="border border-cyan p-4 bg-cyan-glow">
+                        <div class="text-lg font-bold text-white mb-1">TEAM 16166</div>
+                        <div class="text-sm text-cyan font-mono mb-2">WATT'S UP</div>
+                        <div class="text-xs text-gray-400">ROMANIA</div>
+                        <div class="text-xs text-gray-500 mt-2">KNOWLEDGE_TRANSFER: CODE, STRATEGY, DESIGN, OPERATIONS</div>
+                    </div>
+                    <div class="border border-cyan p-4 bg-cyan-glow">
+                        <div class="text-lg font-bold text-white mb-1">TEAM 19176</div>
+                        <div class="text-sm text-cyan font-mono mb-2">BROBOTI</div>
+                        <div class="text-xs text-gray-400">ROMANIA</div>
+                        <div class="text-xs text-gray-500 mt-2">KNOWLEDGE_TRANSFER: CODE, STRATEGY, DESIGN, OPERATIONS</div>
+                    </div>
+                    <div class="border border-cyan p-4 bg-cyan-glow">
+                        <div class="text-lg font-bold text-white mb-1">TEAM 22457</div>
+                        <div class="text-sm text-cyan font-mono mb-2">ULTRAVIOLET</div>
+                        <div class="text-xs text-gray-400">USA</div>
+                        <div class="text-xs text-gray-500 mt-2">KNOWLEDGE_TRANSFER: CODE, STRATEGY, DESIGN, OPERATIONS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 5: OUTREACH & IMPACT -->
+    <div class="page grid-bg relative" id="page5">
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-2 h-12 bg-purple-500"></div>
+                <div>
+                    <h2 class="text-4xl font-bold text-white tracking-widest">OUTREACH_OPS</h2>
+                    <p class="font-mono text-purple-400 text-sm">PUBLIC_ENGAGEMENT // STEM_PROPAGATION</p>
+                </div>
+            </div>
+
+            <!-- Adjusting the grid to space out the two boxes evenly -->
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <div class="data-block p-4 text-center">
+                    <div class="text-4xl font-bold text-cyan font-mono mb-1">5</div>
+                    <div class="text-xs text-gray-500 font-mono">Teams Mentored</div>
+                </div>
+                <div class="data-block p-4 text-center">
+                    <div class="text-4xl font-bold text-red font-mono mb-1">131.75</div>
+                    <div class="text-xs text-gray-500 font-mono">Hours of Outreach</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-8 flex-1">
+                <div>
+                    <h3 class="font-mono text-cyan text-lg mb-4 border-b border-cyan pb-2">ACTIVE_INITIATIVES</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="border-l-2 border-cyan pl-4">
+                            <h4 class="text-white font-bold">RUGBY PORTOBELLO TRUST</h4>
+                            <p class="text-sm text-gray-400 font-mono mt-1">3:15-5PM WEEKLY SESSIONS</p>
+                            <p class="text-sm text-gray-500 mt-1">TEACHING SPIKE_PRIME TO PRIMARY STUDENTS</p>
+                            <div class="mt-2 flex gap-2 text-xs">
+                                <span class="text-cyan font-mono">AFTER_SCHOOL_PROGRAM</span>
+                                <span class="text-gray-600">|</span>
+                                <span class="text-gray-500 font-mono">ONGOING</span>
+                            </div>
+                        </div>
+
+                        <div class="border-l-2 border-red pl-4">
+                            <h4 class="text-white font-bold">ASL FTC MENTORSHIP</h4>
+                            <p class="text-sm text-gray-400 font-mono mt-1">MENTORING OTHER ASL FTC TEAMS</p>
+                            <p class="text-sm text-gray-500 mt-1">TECHNICAL_GUIDANCE + STRATEGY_SUPPORT</p>
+                            <div class="mt-2 flex gap-2 text-xs">
+                                <span class="text-red font-mono">INTERNAL_SUPPORT</span>
+                                <span class="text-gray-600">|</span>
+                                <span class="text-gray-500 font-mono">ONGOING</span>
+                            </div>
+                        </div>
+
+                        <div class="border-l-2 border-amber pl-4">
+                            <h4 class="text-white font-bold">FTC SCRIMMAGE_VOLUNTEERING</h4>
+                            <p class="text-sm text-gray-400 font-mono mt-1">EVENT_SUPPORT + JUDGING_ASSISTANCE</p>
+                            <div class="mt-2 flex gap-2 text-xs">
+                                <span class="text-amber font-mono">EVENT_OPS</span>
+                                <span class="text-gray-600">|</span>
+                                <span class="text-gray-500 font-mono">COMPLETED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-mono text-cyan text-lg mb-4 border-b border-cyan pb-2">DIGITAL PRESENCE</h3>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between items-center p-3 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">INSTAGRAM_FOLLOWERS</span>
+                            <span class="text-cyan font-mono font-bold">164</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">GITHUB_REPOS</span>
+                            <span class="text-cyan font-mono font-bold">PUBLIC</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-black border border-gray-800">
+                            <span class="font-mono text-sm text-gray-300">INTERNATIONAL_CONNECTIONS</span>
+                            <span class="text-cyan font-mono font-bold">3_TEAMS</span>
+                        </div>
+                    </div>
+
+                    <div class="placeholder h-40 w-full mb-2">
+                        <!-- REACH MAP PLACEHOLDER -->
+                    </div>
+                    <p class="text-xs text-center text-gray-500 font-mono">MULTI_NATIONAL_NETWORK_MAP</p>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-4 border-t border-gray-800">
+                <p class="font-mono text-xs text-gray-500 text-center">
+                    ALL_OUTREACH_ACTIVITIES_CONDUCTED_UNDER_STUDENT_LEADERSHIP // NO_EXTERNAL_MANAGEMENT
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 6: ROBOT OVERVIEW -->
+    <div class="page grid-bg relative" id="page6">
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                    <div class="w-2 h-12 bg-red"></div>
+                    <div>
+                        <h2 class="text-4xl font-bold text-white tracking-widest">HARDWARE SPECS</h2>
+                        <p class="font-mono text-red text-sm">ROBOT SYSTEMS // REBUILT</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-gray-500 font-mono">UNIT DESIGNATION</div>
+                    <div class="text-2xl font-bold text-red font-mono tracking-widest">[ROBOT_NAME]</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6 mb-6">
+                <div class="col-span-2 placeholder h-64">
+                    <!-- MAIN ROBOT RENDER PLACEHOLDER -->
+                </div>
+                <div class="space-y-3">
+                    <div class="data-block p-3">
+                        <div class="spec-line">
+                            <span class="spec-label">WEIGHT</span>
+                            <span class="spec-value">[KG] kg</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">DIMENSIONS</span>
+                            <span class="spec-value">17.5 x 18 x 18 in</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">DRIVE TYPE</span>
+                            <span class="spec-value">Custom Belted Mecanum</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">POWER SYSTEM</span>
+                            <span class="spec-value">12V Slim REV Battery</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">CONTROL HUB</span>
+                            <span class="spec-value">REV Control Hub</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border border-red p-3 bg-red-glow">
+                        <p class="text-xs text-red font-mono text-center tracking-widest">
+                            STATUS: OPERATIONAL<br>
+                            DRIVETRAIN: PROTOTYPE V1
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 flex-1">
+                <div class="border border-gray-800 p-4 bg-black bg-opacity-30">
+                    <h4 class="text-cyan font-bold mb-2 font-mono text-sm">Drivetrain</h4>
+                    <div class="placeholder h-24 mb-2"></div>
+                    <p class="text-xs text-gray-400 font-mono">Custom Belted Mecanum</p>
+                    <p class="text-xs text-cyan font-mono mt-1">4x 5203 19.2:1 312RPM Motors</p>
+                    <p class="text-xs text-gray-500 mt-1">Optimized for holonomic movement with superior traction.</p>
+                </div>
+
+                <div class="border border-gray-800 p-4 bg-black bg-opacity-30">
+                    <h4 class="text-red font-bold mb-2 font-mono text-sm">Turret</h4>
+                    <div class="placeholder h-24 mb-2"></div>
+                    <p class="text-xs text-gray-400 font-mono">Bearing Mounted</p>
+                    <p class="text-xs text-red font-mono mt-1">512RPM GoBilda Motor</p>
+                    <p class="text-xs text-gray-500 mt-1">Redesigned for a thin profile to reduce interference.</p>
+                </div>
+
+                <div class="border border-gray-800 p-4 bg-black bg-opacity-30">
+                    <h4 class="text-amber font-bold mb-2 font-mono text-sm">Intake/Transfer</h4>
+                    <div class="placeholder h-24 mb-2"></div>
+                    <p class="text-xs text-gray-400 font-mono">512RPM Motor with Surgical Tubing</p>
+                    <p class="text-xs text-amber font-mono mt-1">Belted Pulleys</p>
+                    <p class="text-xs text-gray-500 mt-1">Designed for optimal compression and smooth transfer.</p>
+                </div>
+
+                <div class="border border-gray-800 p-4 bg-black bg-opacity-30">
+                    <h4 class="text-purple-400 font-bold mb-2 font-mono text-sm">Shooter</h4>
+                    <div class="placeholder h-24 mb-2"></div>
+                    <p class="text-xs text-gray-400 font-mono">High Velocity Flywheel</p>
+                    <p class="text-xs text-purple-400 font-mono mt-1">3000RPM GoBilda Motor</p>
+                    <p class="text-xs text-gray-500 mt-1">Redesigned to eliminate dead space and improve compression. The lower belly pan optimizes center of gravity, and the design excludes an indexer and lift to reduce complexity and improve reliability.</p>
+                </div>
+            </div>
+
+            <!-- Adding emphasis on the dead axle design -->
+            <div class="border border-cyan p-4 bg-cyan-glow">
+                <h4 class="text-cyan font-bold mb-2 text-lg">DEAD AXLE DESIGN</h4>
+                <p class="text-sm text-gray-300 font-mono" style="line-height: 1.5;">
+                    One of the standout features of our robot is the implementation of a <span class="text-cyan font-bold">dead axle design</span>. This design choice allows the wheels to rotate independently of the axle, reducing rotational inertia and improving overall efficiency. By eliminating the need for the axle to spin, we achieve a more robust and reliable drivetrain, capable of withstanding the rigors of competition. This design is a testament to our commitment to engineering excellence and innovation.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 7: DRIVETRAIN DEEP DIVE -->
+    <div class="page grid-bg relative" id="page7">
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-2 h-12 bg-cyan"></div>
+                <div>
+                    <h2 class="text-4xl font-bold text-white tracking-widest">LOCOMOTION_SYS</h2>
+                    <p class="font-mono text-cyan text-sm">DRIVETRAIN_ARCHITECTURE // BELTED_MECANUM</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-8 mb-6">
+                <div>
+                    <h3 class="font-mono text-cyan text-lg mb-4 border-b border-cyan pb-2">DRIVE_PARAMETERS</h3>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="spec-line">
+                            <span class="spec-label">CONFIGURATION</span>
+                            <span class="spec-value">4WD_MECANUM</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">MOTOR_MODEL</span>
+                            <span class="spec-value">5203_19.2:1_312RPM</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">COUNT</span>
+                            <span class="spec-value">4_UNITS</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">PART_NUMBER</span>
+                            <span class="spec-value">5203-2402-0019</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">VOLTAGE_RANGE</span>
+                            <span class="spec-value">3.3-5V_ENCODER</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">SHAFT</span>
+                            <span class="spec-value">8MM_REX_24MM_LENGTH</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-cyan p-3 bg-cyan-glow">
+                        <h4 class="text-cyan font-bold mb-2 text-sm">RATIONALE</h4>
+                        <p class="text-xs text-gray-300 font-mono" style="line-height: 1.5;">BELTED MECANUM SELECTED FOR HOLONOMIC MOVEMENT WITH SUPERIOR TRACTION VS ROLLER MECANUM. CUSTOM BELT DRIVE REDUCES SLIPPAGE AND MAINTAINS CONSISTENT POWER DELIVERY.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-mono text-cyan text-lg mb-4 border-b border-cyan pb-2">MOTOR_SPECS</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="data-block p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-white font-bold">5203_SERIES</span>
+                                <span class="text-xs font-mono text-cyan">YELLOW_JACKET</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-xs font-mono text-gray-400">
+                                <div>RATIO: 19.2:1</div>
+                                <div>RPM: 312</div>
+                                <div>SHAFT: 8MM_REX</div>
+                                <div>LENGTH: 24MM</div>
+                                <div>ENCODER: 3.3-5V</div>
+                                <div>PN: 5203-2402-0019</div>
+                            </div>
+                        </div>
+
+                        <div class="border border-amber p-3">
+                            <h4 class="text-amber text-sm mb-2">POWER_TRAIN</h4>
+                            <p class="text-xs text-gray-400 font-mono">BELT_DRIVE_FROM_MOTOR_TO_WHEEL. REDUCES_COMPLEXITY_VS_GEAR_TRAIN. MAINTAINS_EFFICIENCY.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 border-t border-gray-800 pt-6">
+                <h3 class="font-mono text-cyan text-sm mb-4 tracking-widest">PERFORMANCE_CHARACTERISTICS</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="placeholder h-40 w-full">
+                        <!-- VELOCITY GRAPH PLACEHOLDER -->
+                    </div>
+                    <div class="placeholder h-40 w-full">
+                        <!-- CURRENT DRAW GRAPH PLACEHOLDER -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 8: MECHANISMS -->
+    <div class="page grid-bg relative" id="page8">
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-2 h-12 bg-amber"></div>
+                <div>
+                    <h2 class="text-4xl font-bold text-white tracking-widest">MANIPULATOR_SYS</h2>
+                    <p class="font-mono text-amber text-sm">MECHANICAL_SUBSYSTEMS // TURRET_INTAKE_SHOOTER</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6 flex-1">
+                <div>
+                    <h3 class="font-mono text-red text-lg mb-4 border-b border-red pb-2">TURRET</h3>
+                    
+                    <div class="placeholder h-32 mb-4 w-full"></div>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="spec-line">
+                            <span class="spec-label">DRIVE</span>
+                            <span class="spec-value">512RPM_GOBILDA</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">BEARING</span>
+                            <span class="spec-value">CUSTOM_MOUNT</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">STATUS</span>
+                            <span class="spec-value text-red">REDESIGNED</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-red p-3 bg-red-glow">
+                        <h4 class="text-red text-sm mb-2">ITERATION NOTES</h4>
+                        <p class="text-xs text-gray-400 font-mono" style="line-height: 1.5;">V1 TOO THICK. INTERFERENCE WITH OTHER SYSTEMS. REDESIGNED FOR MINIMAL PROFILE.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-mono text-amber text-lg mb-4 border-b border-amber pb-2">INTAKE/TRANSFER</h3>
+                    
+                    <div class="placeholder h-32 mb-4 w-full"></div>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="spec-line">
+                            <span class="spec-label">DRIVE</span>
+                            <span class="spec-value">512RPM_GOBILDA</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">GRIP</span>
+                            <span class="spec-value">SURGICAL_TUBING</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">TRANSFER</span>
+                            <span class="spec-value">BELTED_PULLEYS</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-amber p-3">
+                        <h4 class="text-amber text-sm mb-2">COMPRESSION TUNING</h4>
+                        <p class="text-xs text-gray-400 font-mono" style="line-height: 1.5;">OPTIMAL COMPRESSION CALCULATED FOR CONSISTENT PARTICLE MOTION WITHOUT JAMMING. </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-mono text-purple-400 text-lg mb-4 border-b border-purple-400 pb-2">SHOOTER</h3>
+                    
+                    <div class="placeholder h-32 mb-4 w-full"></div>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="spec-line">
+                            <span class="spec-label">MOTOR</span>
+                            <span class="spec-value">3000RPM_GOBILDA</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">TYPE</span>
+                            <span class="spec-value">FLYWHEEL</span>
+                        </div>
+                        <div class="spec-line">
+                            <span class="spec-label">VELOCITY</span>
+                            <span class="spec-value">HIGH_SPEED</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-purple-400 p-3">
+                        <h4 class="text-purple-400 text-sm mb-2">LAUNCH DYNAMICS</h4>
+                        <p class="text-xs text-gray-400 font-mono" style="line-height: 1.5;">SINGLE FLYWHEEL CONFIGURATION. VELOCITY BASED RANGE CONTROL. RAPID FIRE CAPABLE.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 border-t border-gray-800 pt-4">
+                <h3 class="font-mono text-cyan text-sm mb-3 tracking-widest">MANUFACTURING_METHODS</h3>
+                <div class="flex gap-4">
+                    <div class="flex-1 border border-cyan p-3 text-center">
+                        <div class="text-cyan font-bold font-mono mb-1">CNC_MACHINING</div>
+                        <div class="text-xs text-gray-500">ALUMINIUM_COMPONENTS</div>
+                    </div>
+                    <div class="flex-1 border border-cyan p-3 text-center">
+                        <div class="text-cyan font-bold font-mono mb-1">LASER_CUTTING</div>
+                        <div class="text-xs text-gray-500">PANELS + BRACKETS</div>
+                    </div>
+                    <div class="flex-1 border border-cyan p-3 text-center">
+                        <div class="text-cyan font-bold font-mono mb-1">LATHE_TURNING</div>
+                        <div class="text-xs text-gray-500">SHAFTS + SPACERS</div>
+                    </div>
+                    <div class="flex-1 border border-cyan p-3 text-center">
+                        <div class="text-cyan font-bold font-mono mb-1">3D_PRINTING</div>
+                        <div class="text-xs text-gray-500">PROTOTYPES + MOUNTS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 9: SOFTWARE -->
+    <div class="page grid-bg relative" id="page9">
+        <div class="p-12 h-full flex flex-col">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-2 h-12 bg-purple-500"></div>
+                <div>
+                    <h2 class="text-4xl font-bold text-white tracking-widest">SOFTWARE_STACK</h2>
+                    <p class="font-mono text-purple-400 text-sm">CONTROL_SYSTEMS // PEDRO_PATHING</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6 mb-6">
+                <div class="col-span-2">
+                    <h3 class="font-mono text-purple-400 text-lg mb-4 border-b border-purple-400 pb-2">ARCHITECTURE</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="data-block p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-white font-bold">PATHING_ENGINE</span>
+                                <span class="font-mono text-xs text-purple-400">CORE</span>
+                            </div>
+                            <p class="text-sm text-gray-400 font-mono">PEDRO_PATHING // BEZIER_CURVE_BASED_TRAJECTORY_GENERATION</p>
+                        </div>
+
+                        <div class="data-block p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-white font-bold">LOCALIZATION</span>
+                                <span class="font-mono text-xs text-purple-400">DUAL ENCODER PINPOINT</span>
+                            </div>
+                            <p class="text-sm text-gray-400 font-mono">Our dual encoder pinpoint localization system is the backbone of our autonomous navigation. Using lateral tracking wheels, we achieve unparalleled accuracy in determining our robot's position on the field. This system ensures precise pathing and alignment, giving us a competitive edge in autonomous operations.</p>
+                        </div>
+
+                        <div class="data-block p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-white font-bold">VISION</span>
+                                <span class="font-mono text-xs text-purple-400">CV_PIPELINE</span>
+                            </div>
+                            <p class="text-sm text-gray-400 font-mono">LIMELIGHT // NEURAL_NETWORK_BASED_TARGET_DETECTION</p>
+                        </div>
+
+                        <div class="data-block p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-white font-bold">CURVE_TYPE</span>
+                                <span class="font-mono text-xs text-purple-400">MATH</span>
+                            </div>
+                            <p class="text-sm text-gray-400 font-mono">BEZIER_CURVES // CONTINUOUS_ACCELERATION_PROFILES</p>
+                        </div>
+
+                        <div class="data-block p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-white font-bold">FLYWHEEL SPEED</span>
+                                <span class="font-mono text-xs text-purple-400">PROJECTILE MOTION</span>
+                            </div>
+                            <p class="text-sm text-gray-400 font-mono">Our autonomous strategy heavily relies on precise projectile motion calculations. By leveraging physics equations, we determine the optimal flywheel velocity to ensure accurate shots at varying distances and heights. This approach minimizes error and maximizes scoring efficiency.</p>
+                        </div>
+
+                        <div class="data-block p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-white font-bold">TURRET ALIGNMENT</span>
+                                <span class="font-mono text-xs text-purple-400">VISION</span>
+                            </div>
+                            <p class="text-sm text-gray-400 font-mono">LIMELIGHT USED TO AUTO ALIGN THE TURRET TO THE BASKET, ENSURING ACCURATE SHOOTING ANGLES.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-mono text-purple-400 text-lg mb-4 border-b border-purple-400 pb-2">RESOURCES</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="border border-purple-400 p-3 text-center bg-purple-400 bg-opacity-5">
+                            <div class="text-3xl font-bold text-purple-400 font-mono">GH</div>
+                            <div class="text-xs text-gray-500">GITHUB_REPO</div>
+                            <div class="text-xs text-cyan mt-1">Airmanextra/FTC2026PP</div>
+                        </div>
+                        
+                        <div class="border border-cyan p-3">
+                            <h4 class="text-cyan text-sm mb-2">REPO_STRUCTURE</h4>
+                            <ul class="text-xs text-gray-400 font-mono space-y-1">
+                                <li>/> TeamCode/</li>
+                                <li>--> PedroPathing/</li>
+                                <li>--> Limelight/</li>
+                                <li>--> Hardware/</li>
+                                <li>--> Auto/</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 border-t border-gray-800 pt-6">
+                <h3 class="font-mono text-cyan text-sm mb-4 tracking-widest">SUBSYSTEM_CONTROL</h3>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-cyan font-bold mb-3 text-sm">AUTONOMOUS_MODES</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                                <span class="font-mono text-sm text-gray-300">SAMPLE_AUTO_1</span>
+                                <span class="text-cyan font-mono text-xs">BEZIER_PATH</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                                <span class="font-mono text-sm text-gray-300">SAMPLE_AUTO_2</span>
+                                <span class="text-cyan font-mono text-xs">BEZIER_PATH</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-black border border-gray-800">
+                                <span class="font-mono text-sm text-gray-300">PARKING</span>
+                                <span class="text-cyan font-mono text-xs">ODOMETRY_ONLY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-cyan font-bold mb-3 text-sm">VISION_PIPELINE</h4>
+                        <div class="placeholder h-32 mb-2 w-full"></div>
+                        <p class="text-xs text-gray-400 font-mono">LIMELIGHT_NEURAL_NETWORK_FOR_SAMPLE_DETECTION_AND_CLASSIFICATION. REAL_TIME_TARGET_TRACKING.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-4 border-t border-gray-800 font-mono text-xs text-gray-500 flex justify-between">
+                <span>REPO: github.com/Airmanextra/FTC2026PP</span>
+                <span>BRANCH: MAIN</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER / BACK COVER -->
+    <div class="page grid-bg hex-pattern relative flex items-center justify-center" id="page10">
+        <div class="corner-accent corner-tl"></div>
+        <div class="corner-accent corner-tr"></div>
+        <div class="corner-accent corner-bl"></div>
+        <div class="corner-accent corner-br"></div>
+
+        <div class="text-center">
+            <h1 class="text-6xl font-bold text-white mb-4 tracking-widest font-tech">NEXUS</h1>
+            <div class="w-64 h-px bg-cyan mx-auto mb-4"></div>
+            <p class="font-mono text-cyan text-lg mb-8">END_OF_TRANSMISSION</p>
+            
+            <div class="space-y-2 font-mono text-sm text-gray-500">
+                <p>CONTACT: [EMAIL@DOMAIN.COM]</p>
+                <p>WEB: github.com/Airmanextra/FTC2026PP</p>
+                <p>SOCIAL: @nexus.roboticsuk</p>
+                <p>LOCATION: LONDON, UNITED KINGDOM</p>
+            </div>
+
+            <div class="mt-12 p-4 border border-dashed border-gray-700 inline-block">
+                <p class="font-mono text-xs text-gray-600 tracking-widest">
+                    DOCUMENT_GENERATED: <span id="genDate"></span><br>
+                    CLASSIFICATION: PUBLIC_RELEASE<br>
+                    COPY_ID: <span class="text-cyan">NEX-2025-19282</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end font-mono text-xs text-gray-600">
+            <div>
+                NEXUS_ROBOTICS_UK<br>
+                FIRST_TECH_CHALLENGE
+            </div>
+            <div class="text-right">
+                19282<br>
+                2025
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding the logo to the footer -->
+    <footer class="flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <img src="FTCNexusLogoNoTriangles.png" alt="Nexus Logo" class="w-8 h-8">
+        <p class="text-sm text-gray-400 ml-2">© 2026 Nexus Robotics. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Auto-generate date
+        document.getElementById('genDate').textContent = new Date().toISOString().split('T')[0];
+        
+        // Glitch effect randomizer
+        setInterval(() => {
+            const glitches = document.querySelectorAll('.glitch-text');
+            glitches.forEach(el => {
+                if(Math.random() > 0.95) {
+                    el.style.textShadow = `${Math.random() * 4 - 2}px 0 var(--neon-red), ${Math.random() * 4 - 2}px 0 var(--neon-cyan)`;
+                    setTimeout(() => {
+                        el.style.textShadow = '';
+                    }, 100);
+                }
+            });
+        }, 2000);
+
+        // Save edits to localStorage
+        document.querySelectorAll('[contenteditable]').forEach(el => {
+            const key = 'nexus_' + Math.random().toString(36).substr(2, 9);
+            el.dataset.storageKey = key;
+            
+            const saved = localStorage.getItem(key);
+            if(saved && saved !== '[INSERT' && !saved.startsWith('[')) {
+                el.textContent = saved;
+            }
+            
+            el.addEventListener('blur', () => {
+                localStorage.setItem(key, el.textContent);
+            });
+        });
+
+        // Console easter egg
+        console.log('%c NEXUS ROBOTICS ', 'background: #000; color: #00f0ff; font-size: 20px; font-weight: bold;');
+        console.log('%c SYSTEM ONLINE ', 'background: #000; color: #ff003c; font-size: 12px;');
+        console.log('%c TEAM 19282 ', 'background: #000; color: #ffae00; font-size: 12px;');
+    </script>
+</body>
+</html>
